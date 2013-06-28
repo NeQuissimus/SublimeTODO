@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 
 ## TODO: Implement TODO_IGNORE setting (http://mdeering.com/posts/004-get-your-textmate-todos-and-fixmes-under-control)
-## TODO: Make the output clickable (å la find results)
+## TODO: Make the output clickable (à la find results)
 ## TODO: Occasional NoneType bug
-## todo: Make the sections foldable (define them as regions?)
+## TODO: Make the sections foldable (define them as regions?)
 
 """"""
 
@@ -29,7 +29,8 @@ DEFAULT_SETTINGS = {
     'core_patterns': {
         'TODO': r'[\s]+TODO[\s]*?:+(?P<todo>.*)$',
         'DOC': r'[\s]+DOC[\s]*?:+(?P<doc>.*)$',
-        'LOG': r'[\s]+LOG[\s]*?:+(?P<log>.*)$'
+        'LOG': r'[\s]+LOG[\s]*?:+(?P<log>.*)$',
+        'TEST': r'[\s]+TEST[\s]*?:+(?P<test>.*)$'
     },
 
     'patterns': {}
@@ -421,7 +422,7 @@ class GotoComment(sublime_plugin.TextCommand):
         data = self.view.settings().get('result_regions')['{0},{1}'.format(
             selected_region.a, selected_region.b)]
         self.log.debug(u'Goto comment at {filepath}:{linenum}'.format(**data))
-        new_view = self.view.window().open_file(data['filepath'])
+        new_view = self.view.window().open_file(data['filepath'], encoding='utf-8')
         do_when(lambda: not new_view.is_loading(), lambda:
                 new_view.run_command("goto_line", {"line": data['linenum']}))
 
